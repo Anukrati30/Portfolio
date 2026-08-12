@@ -4,23 +4,24 @@
 <script>document.documentElement.classList.add('js');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anukrati Sharma — AI/ML Engineer, Computer Vision</title>
+<title>Anukrati Sharma — AI/ML Engineer, Computer Vision ✧</title>
 <meta name="description" content="Anukrati Sharma builds computer vision and applied ML systems — from medical imaging to satellite land-cover classification.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper: #F1F3EF;
-    --paper-2: #E7EAE3;
-    --paper-3: #DEE2D9;
-    --ink: #11161A;
-    --muted: #5B655E;
-    --line: #CBD1C4;
-    --blueprint: #21449A;
-    --blueprint-dim: #3A5CB0;
-    --amber: #D97A17;
-    --white: #FCFCFA;
+    --cream: #FFF8F3;
+    --card: #FFFDFB;
+    --pink: #FF8FC7;
+    --pink-deep: #F2569F;
+    --pink-soft: #FFE1F1;
+    --matcha: #8FA876;
+    --matcha-deep: #5E7A48;
+    --matcha-soft: #E4EEDA;
+    --ink: #4A3B47;
+    --muted: #9A8794;
+    --line: #F0DCE9;
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; min-width:0; }
@@ -29,463 +30,386 @@
   html, body{ max-width:100%; overflow-x:hidden; }
 
   body{
-    background: var(--paper);
+    background: var(--cream);
     color: var(--ink);
-    font-family:'IBM Plex Sans', sans-serif;
-    line-height:1.6;
+    font-family:'Quicksand', sans-serif;
+    font-weight:500;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 64px 64px;
-    background-position: -1px -1px;
+    background-image: radial-gradient(var(--line) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
   }
 
   a{ color:inherit; }
-  ::selection{ background: var(--blueprint); color: var(--white); }
+  ::selection{ background: var(--pink); color: #fff; }
+  a:focus-visible, button:focus-visible{ outline: 3px solid var(--matcha-deep); outline-offset: 3px; }
 
-  a:focus-visible, button:focus-visible{
-    outline: 2px solid var(--blueprint);
-    outline-offset: 3px;
+  .pixel{ font-family:'Pixelify Sans', sans-serif; }
+  .pixel-tiny{ font-family:'Press Start 2P', cursive; }
+  .mono{ font-family:'Space Mono', monospace; }
+
+  /* ---- pixel stepped corners (reusable) ---- */
+  .px-box{
+    clip-path: polygon(
+      0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+  }
+  .px-box-sm{
+    clip-path: polygon(
+      0 5px, 5px 5px, 5px 0,
+      calc(100% - 5px) 0, calc(100% - 5px) 5px, 100% 5px,
+      100% calc(100% - 5px), calc(100% - 5px) calc(100% - 5px), calc(100% - 5px) 100%,
+      5px 100%, 5px calc(100% - 5px), 0 calc(100% - 5px)
+    );
   }
 
-  .mono{ font-family:'IBM Plex Mono', monospace; }
-
   .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--blueprint);
+    font-family:'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    color: var(--pink-deep);
     display:flex;
     align-items:center;
     gap:0.6rem;
   }
-  .eyebrow::before{
-    content:"";
-    width: 7px; height:7px;
-    background: var(--amber);
-    display:inline-block;
-    border-radius: 1px;
-    transform: rotate(45deg);
-  }
+  .eyebrow .ic{ width:14px; height:14px; color: var(--matcha-deep); flex-shrink:0; }
 
-  .wrap{
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 1.75rem;
+  .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 1.75rem; position:relative; z-index:2; }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee-band{
+    background: var(--matcha);
+    border-bottom: 3px solid var(--matcha-deep);
+    overflow:hidden;
+    white-space:nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 499;
+  }
+  .marquee-track{
+    display:inline-flex;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-track span{
+    font-family:'Press Start 2P', cursive;
+    font-size: 0.62rem;
+    color: #FFFDF7;
+    padding: 0.5rem 1.4rem;
+    display:inline-block;
+  }
+  @keyframes marquee{
+    0%{ transform: translateX(0); }
+    100%{ transform: translateX(-50%); }
   }
 
   /* ---------- NAV ---------- */
   header{
-    position: fixed;
-    top:0; left:0; right:0;
-    z-index: 500;
-    background: rgba(241,243,239,0.82);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid transparent;
-    transition: border-color .25s ease, background .25s ease;
+    position: sticky;
+    top: 26px;
+    z-index: 498;
+    background: rgba(255,248,243,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 3px solid var(--ink);
   }
-  header.scrolled{
-    border-bottom-color: var(--line);
-    background: rgba(241,243,239,0.94);
-  }
-  .nav-inner{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding: 1.05rem 0;
-  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding: 0.85rem 0; gap:1rem; }
+  .winbtns{ display:flex; gap:0.4rem; margin-right:0.9rem; }
+  .winbtns span{ width:11px; height:11px; border:2px solid var(--ink); display:inline-block; }
+  .winbtns span:nth-child(1){ background: var(--pink); }
+  .winbtns span:nth-child(2){ background: #FFE29A; }
+  .winbtns span:nth-child(3){ background: var(--matcha); }
+  .brand-row{ display:flex; align-items:center; }
   .brand{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size:1.15rem;
-    text-decoration:none;
-    letter-spacing: -0.01em;
+    font-family:'Pixelify Sans', sans-serif; font-weight:700; font-size:1.2rem;
+    text-decoration:none; color: var(--ink);
   }
-  .brand span{ color: var(--blueprint); }
-  nav ul{
-    list-style:none;
-    display:flex;
-    gap: 2.1rem;
-    align-items:center;
-  }
+  .brand .heart{ color: var(--pink-deep); }
+  nav ul{ list-style:none; display:flex; gap: 1.7rem; align-items:center; }
   nav a.navlink{
-    text-decoration:none;
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-    position:relative;
-    padding-bottom: 3px;
+    text-decoration:none; font-family:'Quicksand', sans-serif; font-weight:600; font-size: 0.9rem;
+    color: var(--ink); position:relative; padding-bottom: 2px;
   }
   nav a.navlink::after{
-    content:"";
-    position:absolute;
-    left:0; bottom:0;
-    width:0; height:2px;
-    background: var(--amber);
-    transition: width .25s ease;
+    content:""; position:absolute; left:0; bottom:-2px; width:0; height:3px;
+    background: var(--pink); transition: width .2s ease;
   }
   nav a.navlink:hover::after{ width:100%; }
   .nav-cta{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.78rem;
-    text-decoration:none;
-    border: 1px solid var(--ink);
-    padding: 0.5rem 0.95rem;
-    border-radius: 3px;
-    transition: background .2s ease, color .2s ease, transform .2s ease;
+    font-family:'Pixelify Sans', sans-serif; font-weight:600; font-size:0.9rem; text-decoration:none;
+    color: var(--ink); background: var(--pink-soft);
+    border: 2.5px solid var(--ink);
+    padding: 0.5rem 1rem;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
     white-space:nowrap;
   }
-  .nav-cta:hover{ background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+  .nav-cta:hover{ background: var(--pink); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+  .nav-cta:active{ transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+  @media (max-width: 720px){ nav ul{ display:none; } }
 
-  @media (max-width: 720px){
-    nav ul{ display:none; }
+  /* ---------- FLOATERS ---------- */
+  .floaters{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+  .floaters svg{ position:absolute; animation: bob 5s ease-in-out infinite; opacity:0.8; }
+  @keyframes bob{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-16px) rotate(8deg); }
   }
 
   /* ---------- HERO ---------- */
-  .hero{
-    padding: 9.5rem 0 5rem;
-  }
-  .hero-grid{
-    display:grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 3.5rem;
-    align-items:start;
-  }
+  .hero{ padding: 3.6rem 0 4.5rem; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items:start; position:relative; z-index:2; }
   .hero h1{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:700;
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    line-height:1.04;
-    letter-spacing:-0.015em;
-    margin: 0.9rem 0 0.4rem;
+    font-family:'Pixelify Sans', sans-serif; font-weight:700;
+    font-size: clamp(2rem, 4.6vw, 3.1rem); line-height:1.15; letter-spacing:-0.01em;
+    margin: 0.8rem 0 0.3rem; color: var(--ink);
   }
+  .hero h1 .hl{ color: var(--pink-deep); }
   .hero h1 em{
-    font-style: normal;
-    color: var(--muted);
-    font-weight:500;
-    display:block;
-    font-size: 0.5em;
-    margin-top: 0.35em;
-    letter-spacing:-0.005em;
+    font-style: normal; color: var(--matcha-deep); font-weight:600; display:block;
+    font-size: 0.52em; margin-top: 0.5em;
   }
-  .hero p.lede{
-    max-width: 46ch;
-    font-size: 1.06rem;
-    color: var(--ink);
-    margin: 1.4rem 0 2rem;
-  }
-  .hero p.lede b{ font-weight:600; }
+  .hero p.lede{ max-width: 46ch; font-size: 1.05rem; color: var(--ink); margin: 1.3rem 0 1.8rem; }
+  .hero p.lede b{ font-weight:700; color: var(--pink-deep); }
 
-  .cta-row{ display:flex; gap:0.9rem; flex-wrap:wrap; }
+  .cta-row{ display:flex; gap:1rem; flex-wrap:wrap; }
   .btn{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.85rem;
-    text-decoration:none;
-    padding: 0.85rem 1.4rem;
-    border-radius: 3px;
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    font-family:'Pixelify Sans', sans-serif; font-weight:600; font-size:1rem; text-decoration:none;
+    padding: 0.8rem 1.4rem; display:inline-flex; align-items:center; gap:0.5rem;
+    border: 2.5px solid var(--ink);
+    transition: transform .12s ease, box-shadow .12s ease, background .15s ease;
   }
-  .btn-primary{
-    background: var(--blueprint);
-    color: var(--white);
-    box-shadow: 3px 3px 0 var(--ink);
-  }
-  .btn-primary:hover{ transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
-  .btn-ghost{
-    background:transparent;
-    border: 1px solid var(--ink);
-    color: var(--ink);
-  }
-  .btn-ghost:hover{ background: var(--ink); color: var(--paper); }
+  .btn-primary{ background: var(--pink); color: var(--ink); box-shadow: 4px 4px 0 var(--matcha-deep); }
+  .btn-primary:hover{ transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--matcha-deep); background: var(--pink-deep); color:#fff; }
+  .btn-primary:active{ transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--matcha-deep); }
+  .btn-ghost{ background: var(--matcha-soft); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+  .btn-ghost:hover{ transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); background: var(--matcha); color:#fff; }
+  .btn-ghost:active{ transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
 
   .currently{
-    margin-top: 2.6rem;
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--muted);
-    border-left: 2px solid var(--amber);
-    padding-left: 0.9rem;
+    margin-top: 2.2rem; font-family:'Space Mono', monospace; font-size: 0.82rem; color: var(--ink);
+    background: var(--matcha-soft); border: 2px dashed var(--matcha-deep); padding: 0.9rem 1.1rem;
   }
-  .currently b{ color: var(--ink); font-weight:600; }
+  .currently b{ color: var(--pink-deep); font-weight:700; }
 
-  /* ---------- HERO VISUAL: viewfinder ---------- */
-  .viewfinder{
-    position: relative;
-    padding: 1.1rem;
-  }
+  /* ---------- HERO VISUAL ---------- */
+  .viewfinder{ position: relative; z-index:2; }
   .frame{
-    position:relative;
-    aspect-ratio: 1 / 1.08;
-    background: var(--paper-2);
-    overflow:hidden;
-    border-radius: 2px;
+    position:relative; aspect-ratio: 1 / 1; background: var(--pink);
+    border: 3px solid var(--ink);
   }
   .frame img{
-    width:100%; height:100%;
-    object-fit: cover;
-    filter: grayscale(35%) contrast(1.05);
-    display:block;
+    width:100%; height:100%; object-fit: cover; display:block;
+    filter: saturate(1.08) contrast(1.02);
+    mix-blend-mode: normal;
   }
-  .corner{
-    position:absolute;
-    width: 22px; height: 22px;
-    border-color: var(--ink);
-    border-style: solid;
-    border-width: 0;
-    z-index:3;
+  .frame-shadow{ position:relative; }
+  .frame-shadow::after{
+    content:""; position:absolute; inset:0; background: var(--matcha-deep);
+    clip-path: inherit; z-index:-1; transform: translate(9px,9px);
   }
-  .corner.tl{ top:-1px; left:-1px; border-top-width:2px; border-left-width:2px; }
-  .corner.tr{ top:-1px; right:-1px; border-top-width:2px; border-right-width:2px; }
-  .corner.bl{ bottom:-1px; left:-1px; border-bottom-width:2px; border-left-width:2px; }
-  .corner.br{ bottom:-1px; right:-1px; border-bottom-width:2px; border-right-width:2px; }
-
-  .scanline{
-    position:absolute;
-    left:0; right:0; top:0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--amber) 80%, transparent);
-    box-shadow: 0 0 12px 1px var(--amber);
-    animation: sweep 2.2s cubic-bezier(.55,0,.3,1) 0.4s 1 both;
-    z-index:4;
-  }
-  @keyframes sweep{
-    0%{ top:0; opacity: 0; }
-    8%{ opacity:1; }
-    92%{ opacity:1; }
-    100%{ top:100%; opacity:0; }
+  .sticker{
+    position:absolute; font-family:'Press Start 2P', cursive; font-size: 0.58rem;
+    background: var(--matcha); color:#fff; border: 2px solid var(--ink);
+    padding: 0.45rem 0.6rem; transform: rotate(-8deg);
+    top: -14px; right: -14px; z-index:5;
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
-  .readout{
-    margin-top: 0.9rem;
-    background: var(--ink);
-    color: var(--white);
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.76rem;
-    padding: 0.95rem 1.05rem;
-    border-radius: 2px;
-    display:grid;
-    row-gap: 0.4rem;
+  .stat-card{
+    margin-top: 1.6rem; background: var(--card); border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--pink-deep);
+    padding: 1.1rem 1.2rem;
   }
-  .readout .status{ color: var(--amber); letter-spacing:0.04em; }
-  .readout .row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.3rem 1rem; color: #C7CDC4; }
-  .readout .row b{ color: var(--white); font-weight:500; text-align:right; }
-  .caret{ display:inline-block; width:7px; }
-  .caret::after{
-    content:"▍";
-    animation: blink 1s steps(1) infinite;
+  .stat-card .head{
+    font-family:'Press Start 2P', cursive; font-size:0.62rem; color: var(--matcha-deep);
+    margin-bottom: 0.8rem; display:flex; align-items:center; gap:0.5rem;
   }
-  @keyframes blink{ 50%{ opacity:0; } }
+  .stat-row{
+    display:flex; justify-content:space-between; align-items:center; gap:1rem;
+    font-family:'Space Mono', monospace; font-size:0.82rem; color: var(--muted);
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .stat-row:last-child{ border-bottom:none; }
+  .stat-row b{ color: var(--ink); font-weight:700; text-align:right; }
+
+  .loadbar-wrap{ margin-top:0.9rem; }
+  .loadbar-label{ font-family:'Space Mono', monospace; font-size:0.72rem; color: var(--muted); margin-bottom:0.35rem; display:flex; justify-content:space-between; }
+  .loadbar{ height: 12px; background: var(--matcha-soft); border: 2px solid var(--ink); position:relative; overflow:hidden; }
+  .loadbar-fill{
+    height:100%; width: 0%; background: repeating-linear-gradient(45deg, var(--pink), var(--pink) 6px, var(--pink-deep) 6px, var(--pink-deep) 12px);
+    transition: width 1.8s steps(20);
+  }
+  .loadbar-fill.done{ width: 100%; }
 
   /* ---------- SECTION SCAFFOLDING ---------- */
-  section{ padding: 5.2rem 0; }
-  .section-head{ margin-bottom: 2.6rem; max-width: 60ch; }
+  section{ padding: 4.4rem 0; position:relative; z-index:2; }
+  .section-head{ margin-bottom: 2.4rem; max-width: 60ch; }
   .section-head h2{
-    font-family:'Space Grotesk', sans-serif;
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-    font-weight:600;
-    letter-spacing:-0.01em;
-    margin-top: 0.5rem;
+    font-family:'Pixelify Sans', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight:700;
+    margin-top: 0.6rem; color: var(--ink);
   }
-  .reveal{ transition: opacity .6s ease, transform .6s ease; }
-  .js .reveal{ opacity: 0; transform: translateY(18px); }
+  .reveal{ transition: opacity .5s ease, transform .5s ease; }
+  .js .reveal{ opacity: 0; transform: translateY(16px); }
   .js .reveal.in{ opacity:1; transform:none; }
 
-  /* ---------- PROJECTS (field log) ---------- */
-  .log{ display:flex; flex-direction:column; gap: 1.1rem; }
+  /* ---------- PROJECTS ---------- */
+  .log{ display:flex; flex-direction:column; gap: 1.3rem; }
   .log-item{
-    border: 1px solid var(--line);
-    background: var(--white);
-    border-radius: 3px;
-    padding: 1.6rem 1.8rem;
-    display:grid;
-    grid-template-columns: 130px 1fr;
-    gap: 1.6rem;
-    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    position:relative; border: 3px solid var(--ink); background: var(--card);
+    padding: 1.6rem 1.8rem; display:grid; grid-template-columns: 130px 1fr; gap: 1.6rem;
+    box-shadow: 6px 6px 0 var(--line-shadow, var(--matcha-soft));
+    transition: transform .18s ease, box-shadow .18s ease;
   }
-  .log-item:hover{
-    border-color: var(--blueprint);
-    box-shadow: 4px 4px 0 var(--paper-3);
-    transform: translate(-1px,-1px);
-  }
+  .log-item:nth-child(3n+1){ --line-shadow: var(--matcha-soft); }
+  .log-item:nth-child(3n+2){ --line-shadow: var(--pink-soft); }
+  .log-item:nth-child(3n+3){ --line-shadow: #FFE9C2; }
+  .log-item:hover{ transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--line-shadow, var(--matcha-soft)); }
   .log-tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--blueprint);
-    border: 1px solid var(--blueprint);
-    border-radius: 20px;
-    padding: 0.3rem 0.7rem;
-    height: fit-content;
-    text-align:center;
+    font-family:'Press Start 2P', cursive; font-size: 0.56rem; color: var(--ink);
+    border: 2px solid var(--ink); background: var(--pink-soft);
+    padding: 0.4rem 0.55rem; height: fit-content; text-align:center;
   }
-  .log-body h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-size: 1.2rem;
-    font-weight:600;
-    margin-bottom: 0.5rem;
-  }
+  .log-body h3{ font-family:'Pixelify Sans', sans-serif; font-size: 1.25rem; font-weight:700; margin-bottom: 0.5rem; color: var(--ink); }
   .log-body p.desc{ color: var(--ink); margin-bottom: 0.85rem; max-width: 62ch; }
   .spec{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.76rem;
-    color: var(--muted);
-    background: var(--paper-2);
-    border-radius: 2px;
-    padding: 0.55rem 0.75rem;
-    margin-bottom: 0.9rem;
-    display:inline-block;
+    font-family:'Space Mono', monospace; font-size: 0.76rem; color: var(--muted);
+    background: var(--matcha-soft); border: 1.5px solid var(--matcha); 
+    padding: 0.5rem 0.7rem; margin-bottom: 0.9rem; display:inline-block;
   }
-  .spec b{ color: var(--ink); font-weight:500; }
-  .tags{ display:flex; flex-wrap:wrap; gap: 0.45rem; margin-bottom: 0.9rem; }
+  .spec b{ color: var(--ink); font-weight:700; }
+  .tags{ display:flex; flex-wrap:wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
   .tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    background: var(--paper-2);
-    color: var(--ink);
-    padding: 0.25rem 0.6rem;
-    border-radius: 2px;
+    font-family:'Space Mono', monospace; font-size: 0.7rem; background: #fff;
+    color: var(--ink); padding: 0.25rem 0.55rem; border: 1.5px solid var(--line);
   }
   .log-link{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-    text-decoration:none;
-    color: var(--ink);
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 1px;
-    transition: color .2s ease, border-color .2s ease;
+    font-family:'Pixelify Sans', sans-serif; font-weight:600; font-size: 0.9rem; text-decoration:none; color: var(--ink);
+    border-bottom: 2.5px solid var(--pink); padding-bottom: 1px; transition: color .2s ease, border-color .2s ease;
   }
-  .log-link:hover{ color: var(--blueprint); border-color: var(--blueprint); }
+  .log-link:hover{ color: var(--pink-deep); border-color: var(--matcha-deep); }
 
   @media (max-width: 640px){
     .log-item{ grid-template-columns: 1fr; }
     .log-tag{ width: fit-content; }
   }
 
-  /* ---------- IN PROGRESS ---------- */
   .progress-banner{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing:0.08em;
-    color: var(--amber);
-    text-transform:uppercase;
-    margin-bottom: 0.6rem;
+    font-family:'Press Start 2P', cursive; font-size: 0.6rem;
+    color: var(--matcha-deep); margin-bottom: 0.8rem;
   }
 
-  /* ---------- CERTIFICATIONS: spec sheet ---------- */
-  .spec-sheet{
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    overflow:hidden;
-    background: var(--white);
-  }
+  /* ---------- CERTIFICATIONS ---------- */
+  .spec-sheet{ border: 3px solid var(--ink); background: var(--card); box-shadow: 6px 6px 0 var(--pink-soft); }
   .spec-row{
-    display:grid;
-    grid-template-columns: 1fr 200px 90px;
-    gap: 1rem;
-    padding: 1.05rem 1.5rem;
-    border-bottom: 1px solid var(--line);
-    align-items:center;
-    transition: background .2s ease;
+    display:grid; grid-template-columns: 28px 1fr 200px 90px; gap: 0.9rem;
+    padding: 1rem 1.4rem; border-bottom: 2px dashed var(--line); align-items:center;
+    transition: background .15s ease;
   }
   .spec-row:last-child{ border-bottom:none; }
-  .spec-row:hover{ background: var(--paper-2); }
-  .spec-row .cert-name{ font-weight:500; }
+  .spec-row:hover{ background: var(--matcha-soft); }
+  .spec-row .ic{ width:16px; height:16px; color: var(--pink-deep); }
+  .spec-row .cert-name{ font-weight:700; color: var(--ink); }
   .spec-row .cert-issuer, .spec-row .cert-year{
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-    color: var(--muted);
+    font-family:'Space Mono', monospace; font-size: 0.8rem; color: var(--muted);
   }
   .spec-head{
-    display:grid;
-    grid-template-columns: 1fr 200px 90px;
-    gap:1rem;
-    padding: 0.7rem 1.5rem;
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color: var(--muted);
-    background: var(--paper-2);
+    display:grid; grid-template-columns: 28px 1fr 200px 90px; gap:0.9rem; padding: 0.7rem 1.4rem;
+    font-family:'Press Start 2P', cursive; font-size: 0.56rem;
+    color: var(--ink); background: var(--pink-soft); border-bottom: 3px solid var(--ink);
   }
   @media (max-width: 640px){
-    .spec-row, .spec-head{ grid-template-columns: 1fr; gap:0.25rem; }
-    .spec-row{ padding: 1rem 1.2rem; }
+    .spec-row, .spec-head{ grid-template-columns: 20px 1fr; gap:0.4rem; }
+    .spec-row{ padding: 1rem 1.1rem; }
     .spec-head{ display:none; }
+    .spec-row .cert-issuer, .spec-row .cert-year{ grid-column: 2; }
     .spec-row .cert-issuer::before{ content:"Issuer — "; }
     .spec-row .cert-year::before{ content:"Year — "; }
   }
 
   /* ---------- CONTACT ---------- */
   .contact-band{
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 4px;
-    padding: 3.2rem 2.4rem;
-    text-align:left;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 48px 48px;
+    position:relative; border: 3px solid var(--ink); padding: 3rem 2.2rem;
+    background: var(--matcha);
+    box-shadow: 8px 8px 0 var(--pink-deep);
   }
-  .contact-band .eyebrow{ color: var(--amber); }
-  .contact-band .eyebrow::before{ background: var(--blueprint-dim); }
+  .contact-band .eyebrow{ color: #FFF3FA; }
+  .contact-band .eyebrow .ic{ color: #FFD9EE; }
   .contact-band h2{
-    font-family:'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    font-weight:600;
-    margin: 0.6rem 0 0.7rem;
+    font-family:'Pixelify Sans', sans-serif; font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight:700;
+    margin: 0.6rem 0 0.7rem; color: #fff;
   }
-  .contact-band p{ color:#C7CDC4; max-width:50ch; margin-bottom: 1.8rem; }
+  .contact-band p{ color:#EFF7E8; max-width:50ch; margin-bottom: 1.7rem; }
   .contact-links{ display:flex; flex-wrap:wrap; gap: 0.9rem; }
   .contact-link{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.85rem;
-    text-decoration:none;
-    color: var(--paper);
-    border: 1px solid #3A433D;
-    padding: 0.8rem 1.2rem;
-    border-radius: 3px;
-    transition: border-color .2s ease, transform .2s ease, background .2s ease;
+    font-family:'Pixelify Sans', sans-serif; font-weight:600; font-size:0.95rem; text-decoration:none; color: var(--ink);
+    background: #fff; border: 2.5px solid var(--ink); padding: 0.75rem 1.15rem;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
   }
-  .contact-link:hover{ border-color: var(--amber); background: rgba(217,122,23,0.1); transform: translateY(-2px); }
+  .contact-link:hover{ transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); background: var(--pink-soft); }
+  .contact-link:active{ transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
 
   footer.site-footer{
-    text-align:center;
-    padding: 2.2rem 0 3rem;
-    font-family:'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
+    text-align:center; padding: 2rem 0 2.6rem; font-family:'Space Mono', monospace;
+    font-size: 0.75rem; color: var(--muted); position:relative; z-index:2;
   }
+  footer.site-footer .heart{ color: var(--pink-deep); }
 
   @media (max-width: 860px){
     .hero-grid{ grid-template-columns: 1fr; }
-    .viewfinder{ max-width: 360px; }
+    .viewfinder{ max-width: 380px; }
+    header{ top: 0; }
   }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
   }
+
+  /* cursor sparkle particles */
+  .spark{
+    position: fixed; pointer-events:none; z-index:9999; width:10px; height:10px;
+    animation: spark-fade 0.7s ease-out forwards;
+  }
+  @keyframes spark-fade{
+    0%{ opacity:1; transform: translateY(0) scale(1); }
+    100%{ opacity:0; transform: translateY(-22px) scale(0.4); }
+  }
 </style>
 </head>
 <body>
 
+<!-- reusable pixel icon defs -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="ic-heart" viewBox="0 0 8 8"></symbol>
+    <symbol id="ic-star" viewBox="0 0 8 8"></symbol>
+  </defs>
+</svg>
+
+<div class="marquee-band">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>★ AI / ML ENGINEER ★ COMPUTER VISION ★ APPLIED ML ★ OPEN TO WORK ★ BENGALURU, IN ★ ITGIRL.EXE RUNNING ★</span>
+    <span>★ AI / ML ENGINEER ★ COMPUTER VISION ★ APPLIED ML ★ OPEN TO WORK ★ BENGALURU, IN ★ ITGIRL.EXE RUNNING ★</span>
+  </div>
+</div>
+
 <header id="navbar">
   <div class="wrap nav-inner">
-    <a href="#top" class="brand">anukrati<span>.</span></a>
+    <div class="brand-row">
+      <span class="winbtns"><span></span><span></span><span></span></span>
+      <a href="#top" class="brand">anukrati<span class="heart">.exe</span></a>
+    </div>
     <nav>
       <ul>
-        <li><a href="#work" class="navlink">Work</a></li>
-        <li><a href="#certifications" class="navlink">Certifications</a></li>
-        <li><a href="#contact" class="navlink">Contact</a></li>
+        <li><a href="#work" class="navlink">work</a></li>
+        <li><a href="#certifications" class="navlink">certifications</a></li>
+        <li><a href="#contact" class="navlink">contact</a></li>
       </ul>
     </nav>
-    <a href="mailto:anukratimeerut@gmail.com" class="nav-cta">Get in touch</a>
+    <a href="mailto:anukratimeerut@gmail.com" class="nav-cta">say hi!</a>
   </div>
 </header>
 
@@ -493,36 +417,40 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="floaters" id="floaters"></div>
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">Computer Vision · Applied ML</p>
-        <h1>Anukrati Sharma<em>builds systems that see.</em></h1>
+        <p class="eyebrow"><svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>COMPUTER VISION · APPLIED ML</p>
+        <h1>Anukrati Sharma<em>builds systems that <span class="hl">see</span> ✧</em></h1>
         <p class="lede">
-          I train deep learning models that read chest X-rays, spot counterfeit currency, and classify land cover from satellite imagery. Before this, I shipped production software — REST APIs, enterprise data pipelines, cloud integrations — and I bring that same rigor to ML systems now.
+          I train deep learning models that read chest X-rays, spot counterfeit currency, and classify land cover from satellite imagery. Before this, I shipped <b>production software</b> — REST APIs, enterprise data pipelines, cloud integrations — and I bring that same rigor to ML systems now.
         </p>
         <div class="cta-row">
-          <a href="#work" class="btn btn-primary">View projects →</a>
-          <a href="mailto:anukratimeerut@gmail.com" class="btn btn-ghost">Get in touch</a>
+          <a href="#work" class="btn btn-primary">view projects →</a>
+          <a href="mailto:anukratimeerut@gmail.com" class="btn btn-ghost">say hi ♡</a>
         </div>
         <p class="currently">
-          <b>Currently</b> — Associate Software Engineer @ Accenture, Bengaluru. Shipping production data pipelines by day, going deeper on computer vision and GenAI on the side.
+          <b>currently:</b> Associate Software Engineer @ Accenture, Bengaluru. Shipping production data pipelines by day, going deeper on computer vision + GenAI on the side.
         </p>
       </div>
 
       <div class="viewfinder">
-        <div class="frame">
-          <span class="corner tl"></span>
-          <span class="corner tr"></span>
-          <span class="corner bl"></span>
-          <span class="corner br"></span>
-          <div class="scanline"></div>
-          <img src="PHOTO-2025-07-28-18-01-52.jpg" alt="Portrait of Anukrati Sharma">
+        <div class="frame-shadow px-box">
+          <div class="frame px-box">
+            <span class="sticker">100% THAT GIRL</span>
+            <img src="PHOTO-2025-07-28-18-01-52.jpg" alt="Portrait of Anukrati Sharma">
+          </div>
         </div>
-        <div class="readout">
-          <div class="status">STATUS: <span id="statusText">SCAN COMPLETE</span><span class="caret"></span></div>
-          <div class="row"><span>CLASS</span><b>AI / ML Engineer</b></div>
-          <div class="row"><span>FOCUS</span><b>Computer Vision · Applied ML</b></div>
-          <div class="row"><span>BASE</span><b>Bengaluru, IN</b></div>
+
+        <div class="stat-card">
+          <div class="head"><svg class="ic" width="14" height="14" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-heart"/></svg> PLAYER CARD</div>
+          <div class="stat-row"><span>CLASS</span><b>AI / ML Engineer</b></div>
+          <div class="stat-row"><span>FOCUS</span><b>Computer Vision · Applied ML</b></div>
+          <div class="stat-row"><span>BASE</span><b>Bengaluru, IN</b></div>
+          <div class="loadbar-wrap">
+            <div class="loadbar-label"><span id="loadLabel">loading portfolio…</span><span id="loadPct">0%</span></div>
+            <div class="loadbar"><div class="loadbar-fill" id="loadFill"></div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -532,8 +460,8 @@
   <section id="work">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Field log</p>
-        <h2>Things I've built</h2>
+        <p class="eyebrow"><svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>PROJECT DIARY</p>
+        <h2>things i've built</h2>
       </div>
 
       <div class="log">
@@ -551,7 +479,7 @@
               <span class="tag">Streamlit</span>
               <span class="tag">Medical Imaging</span>
             </div>
-            <a href="https://github.com/Anukrati30/detection_of_TB" class="log-link">View source ↗</a>
+            <a href="https://github.com/Anukrati30/detection_of_TB" class="log-link">view source ↗</a>
           </div>
         </article>
 
@@ -567,7 +495,7 @@
               <span class="tag">Image Processing</span>
               <span class="tag">Streamlit</span>
             </div>
-            <a href="https://github.com/Anukrati30/Fake-Indian-Currency-Detection" class="log-link">View source ↗</a>
+            <a href="https://github.com/Anukrati30/Fake-Indian-Currency-Detection" class="log-link">view source ↗</a>
           </div>
         </article>
 
@@ -583,14 +511,14 @@
               <span class="tag">Geospatial Analysis</span>
               <span class="tag">Pandas</span>
             </div>
-            <a href="https://github.com/Anukrati30/" class="log-link">View source ↗</a>
+            <a href="https://github.com/Anukrati30/" class="log-link">view source ↗</a>
           </div>
         </article>
 
       </div>
 
-      <div style="margin-top: 3rem;">
-        <p class="progress-banner reveal">In progress</p>
+      <div style="margin-top: 2.8rem;">
+        <p class="progress-banner reveal">✧ in progress</p>
         <div class="log">
           <article class="log-item reveal">
             <span class="log-tag mono">LANGUAGE</span>
@@ -604,7 +532,7 @@
                 <span class="tag">NLP</span>
                 <span class="tag">Supabase</span>
               </div>
-              <a href="https://github.com/Anukrati30/Personal_Dictionary" class="log-link">View source ↗</a>
+              <a href="https://github.com/Anukrati30/Personal_Dictionary" class="log-link">view source ↗</a>
             </div>
           </article>
         </div>
@@ -616,40 +544,46 @@
   <section id="certifications">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Credentials</p>
-        <h2>Certifications</h2>
+        <p class="eyebrow"><svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>CREDENTIALS</p>
+        <h2>badges unlocked</h2>
       </div>
 
       <div class="spec-sheet reveal">
         <div class="spec-head">
-          <span>Certification</span><span>Issuer</span><span>Year</span>
+          <span></span><span>Certification</span><span>Issuer</span><span>Year</span>
         </div>
         <div class="spec-row">
+          <svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>
           <span class="cert-name">Oracle Cloud Infrastructure (OCI) AI Foundations Associate</span>
           <span class="cert-issuer">Oracle</span>
           <span class="cert-year">2024</span>
         </div>
         <div class="spec-row">
+          <svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>
           <span class="cert-name">OCI GenAI Associate</span>
           <span class="cert-issuer">Oracle Cloud Infrastructure</span>
           <span class="cert-year">2024</span>
         </div>
         <div class="spec-row">
+          <svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>
           <span class="cert-name">GEN AI for Delivery Training</span>
           <span class="cert-issuer">Accenture</span>
           <span class="cert-year">2024</span>
         </div>
         <div class="spec-row">
+          <svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>
           <span class="cert-name">NVIDIA Knowledge Quest Foundation Course</span>
           <span class="cert-issuer">NVIDIA</span>
           <span class="cert-year">2024</span>
         </div>
         <div class="spec-row">
+          <svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>
           <span class="cert-name">Microsoft Student Ambassadors Technical Training</span>
           <span class="cert-issuer">Microsoft</span>
           <span class="cert-year">2024</span>
         </div>
         <div class="spec-row">
+          <svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-star"/></svg>
           <span class="cert-name">Problem-Solving (Intermediate)</span>
           <span class="cert-issuer">HackerRank</span>
           <span class="cert-year">—</span>
@@ -662,13 +596,13 @@
   <section id="contact">
     <div class="wrap">
       <div class="contact-band reveal">
-        <p class="eyebrow">Say hello</p>
-        <h2>Let's build something.</h2>
+        <p class="eyebrow"><svg class="ic" viewBox="0 0 8 8" fill="currentColor"><use href="#ic-heart"/></svg>SAY HELLO</p>
+        <h2>let's build something ♡</h2>
         <p>Open to AI/ML engineering roles and interesting problems in computer vision, GenAI, and applied ML. Reach out — I reply fast.</p>
         <div class="contact-links">
-          <a href="mailto:anukratimeerut@gmail.com" class="contact-link">Email →</a>
-          <a href="https://www.linkedin.com/in/anukrati-sharma-554b45207/" class="contact-link">LinkedIn →</a>
-          <a href="https://github.com/Anukrati30" class="contact-link">GitHub →</a>
+          <a href="mailto:anukratimeerut@gmail.com" class="contact-link">email →</a>
+          <a href="https://www.linkedin.com/in/anukrati-sharma-554b45207/" class="contact-link">linkedin →</a>
+          <a href="https://github.com/Anukrati30" class="contact-link">github →</a>
         </div>
       </div>
     </div>
@@ -677,15 +611,47 @@
 </main>
 
 <footer class="site-footer">
-  Designed &amp; built by Anukrati Sharma
+  made with <span class="heart">♡</span> by Anukrati Sharma
 </footer>
 
 <script>
-  // Nav scroll state
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+  // Build pixel icon symbols from bitmasks (8x8 grid)
+  (function(){
+    const heart = [
+      "01100110",
+      "11111111",
+      "11111111",
+      "11111111",
+      "01111110",
+      "00111100",
+      "00011000",
+      "00000000"
+    ];
+    const star = [
+      "00011000",
+      "00011000",
+      "01011010",
+      "11111111",
+      "11111111",
+      "01011010",
+      "00011000",
+      "00011000"
+    ];
+    function build(id, grid){
+      const sym = document.getElementById(id);
+      let rects = "";
+      grid.forEach((row, y) => {
+        for (let x = 0; x < row.length; x++){
+          if (row[x] === "1") rects += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+        }
+      });
+      sym.innerHTML = rects;
+    }
+    build("ic-heart", heart);
+    build("ic-star", star);
+  })();
+
+  // Nav is sticky by default (no scroll-state class needed for this theme)
 
   // Smooth anchor scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -698,8 +664,9 @@
     });
   });
 
-  // Scroll reveal
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
   if (reduceMotion) {
     revealEls.forEach(el => el.classList.add('in'));
@@ -715,12 +682,72 @@
     revealEls.forEach(el => io.observe(el));
   }
 
-  // Status readout: briefly shows "scanning" before settling, unless reduced motion
-  const statusEl = document.getElementById('statusText');
-  if (statusEl && !reduceMotion) {
-    statusEl.textContent = 'SCANNING…';
-    setTimeout(() => { statusEl.textContent = 'SCAN COMPLETE'; }, 2200);
+  // Loading bar
+  const fill = document.getElementById('loadFill');
+  const pct = document.getElementById('loadPct');
+  const label = document.getElementById('loadLabel');
+  if (fill) {
+    requestAnimationFrame(() => { fill.classList.add('done'); });
+    let p = 0;
+    const step = () => {
+      p += 5;
+      if (p > 100) p = 100;
+      pct.textContent = p + '%';
+      if (p < 100) {
+        setTimeout(step, reduceMotion ? 0 : 90);
+      } else {
+        label.textContent = 'portfolio loaded ✓';
+      }
+    };
+    step();
   }
+
+  // Floating pixel sparkles/hearts in hero
+  (function(){
+    const container = document.getElementById('floaters');
+    if (!container || reduceMotion) return;
+    const icons = ['ic-star', 'ic-heart'];
+    const colors = ['#FF8FC7', '#8FA876', '#F2569F'];
+    const count = window.innerWidth < 700 ? 5 : 9;
+    for (let i = 0; i < count; i++){
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      const size = 10 + Math.random() * 10;
+      svg.setAttribute('width', size);
+      svg.setAttribute('height', size);
+      svg.setAttribute('viewBox', '0 0 8 8');
+      svg.setAttribute('fill', colors[i % colors.length]);
+      const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      use.setAttribute('href', '#' + icons[i % icons.length]);
+      svg.appendChild(use);
+      svg.style.left = (Math.random() * 96) + '%';
+      svg.style.top = (Math.random() * 90) + '%';
+      svg.style.animationDuration = (4 + Math.random() * 3) + 's';
+      svg.style.animationDelay = (Math.random() * 2) + 's';
+      svg.style.opacity = 0.5 + Math.random() * 0.4;
+      container.appendChild(svg);
+    }
+  })();
+
+  // Cursor sparkle trail
+  (function(){
+    if (reduceMotion) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return; // skip on touch devices
+    let last = 0;
+    const colors = ['#FF8FC7', '#8FA876', '#F2569F'];
+    window.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - last < 70) return;
+      last = now;
+      const el = document.createElement('div');
+      el.className = 'spark';
+      el.style.left = (e.clientX - 5) + 'px';
+      el.style.top = (e.clientY - 5) + 'px';
+      el.style.background = colors[Math.floor(Math.random()*colors.length)];
+      el.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 700);
+    }, { passive: true });
+  })();
 </script>
 
 </body>
